@@ -2,6 +2,13 @@
 #include "MemoryFree.h"//TODO: remove
 
 Parser::Parser() {
+  maxBufferLength = 128;
+  bufferLength = 0;
+  buffer = (byte*) malloc(bufferLength);
+}
+
+Parser::Parser(int16_t maxBufferSize) {
+  maxBufferLength = maxBufferSize;
   bufferLength = 0;
   buffer = (byte*) malloc(bufferLength);
 }
@@ -13,7 +20,7 @@ Parser::~Parser() {
 vector<Command*>* Parser::parse(byte* data, uint8_t dataLength) {
   // printf_P(PSTR("Parser::parse: data @%d, len = %d | buffer @%d, len = %d\n"), data, dataLength, buffer, bufferLength);
   // printf_P(PSTR("freemem = %d\n"), freeMemory());
-  if (bufferLength > MAX_BUFFER_LENGTH) trim(bufferLength / 2);
+  if (bufferLength > maxBufferLength) trim(bufferLength / 2);
   if (bufferLength == 0) {
     int16_t start = searchStart(data, dataLength, 0);
     if (start != NOT_FIND) {

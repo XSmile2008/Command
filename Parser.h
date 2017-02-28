@@ -7,6 +7,7 @@
 class Parser {
   public:
     Parser();
+    Parser(int16_t maxBufferSize)
     ~Parser();
     vector<Command*>* parse(byte* data, uint8_t size);
   private:
@@ -17,7 +18,6 @@ class Parser {
 
     byte* buffer;
     uint16_t bufferLength;
-    static const int16_t MAX_BUFFER_LENGTH = 128;
     static const int8_t NOT_FIND = - 1;
 };
 
